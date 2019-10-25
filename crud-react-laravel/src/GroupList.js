@@ -25,7 +25,7 @@ class GroupList extends Component {
             const url = 'http://localhost:8000/api/group/import';
             const formData = {csv: e.target.result};
             post(url, formData)
-                .then(response => this.setState({data: response.data }))
+                .then(response => this.setState({data: response.data.data }))
                 .catch(e => {
                     alert(e.message);
                     console.log(e)
