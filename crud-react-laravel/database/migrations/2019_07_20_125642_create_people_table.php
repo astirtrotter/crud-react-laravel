@@ -18,7 +18,7 @@ class CreatePeopleTable extends Migration
             $table->unsignedBigInteger('group_id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email_address');
+            $table->string('email_address')->unique();
             $table->enum('status', ['active', 'archived']);
             $table->timestamps();
 

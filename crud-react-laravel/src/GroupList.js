@@ -1,23 +1,35 @@
 import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 import ReactFileReader from 'react-file-reader'
+import { post } from 'axios'
 
 class PeopleList extends Component {
     constructor(props) {
         super(props);
         this.state = { data: [] };
+
+        this.handleFiles = this.handleFiles.bind(this);
     }
 
     componentDidMount() {
-        fetch("http://localhost:8000/api/groups")
+        fetch("http://localhost:8000/api/group")
             .then(response => response.json())
             .then(data => this.setState({ data: data.data }));
     }
 
     handleFiles = files => {
+        if (!files.length) return;
+
         var reader = new FileReader();
         reader.onload = function (e) {
-            console.log(reader.result);
+            const url = 'http://localhost:8000/api/group/import';
+            const formData = {csv: e.target.result};
+            post(url, formData)
+                .then(response => console.log(response))
+                .catch(e => {
+                    alert(e.message);
+                    console.log(e)
+                });
         };
         reader.readAsText(files[0]);
     }

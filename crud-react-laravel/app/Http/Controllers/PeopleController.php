@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-
 use App\Http\Resources\PeopleCollection;
 use App\Http\Resources\PersonResource;
+use App\Models\Group;
 use App\Models\Person;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PeopleController extends Controller
 {
@@ -16,9 +16,10 @@ class PeopleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($group)
     {
-        return new PeopleCollection(Person::all());
+        $group = Group::findOrFail($group);
+        return new PeopleCollection($group->people);
     }
 
     /**
@@ -102,5 +103,10 @@ class PeopleController extends Controller
         $person->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function importPeople(Request $request, $group)
+    {
+        $group = Group::findOrFail($group);
     }
 }

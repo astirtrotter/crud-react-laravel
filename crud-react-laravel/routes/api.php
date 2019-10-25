@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::resource('groups', 'GroupsController');
-Route::resource('people', 'PeopleController');
-Route::get('/groups/{group}/people', 'GroupsController@getPeople')->name('group.people');
+//Route::resource('groups', 'GroupsController');
+//Route::resource('people', 'PeopleController');
+Route::get('group', 'GroupsController@index');
+Route::post('group/import', 'GroupsController@importGroups');
+Route::get('group/{group}', 'PeopleController@index');
+Route::post('group/{group}/import', 'PeopleController@importPeople');
