@@ -4,11 +4,10 @@ import { Container, Header } from "semantic-ui-react";
 
 import GroupList from "./GroupList";
 
-const App = ({ children }) => (
+const App = () => (
   <Container style={{ margin: 20 }}>
     <Header as="h3"><span role="img" aria-label="logo">⛵️</span> Church </Header>
-
-    {children}
+    <GroupList />
   </Container>
 );
 
@@ -18,8 +17,6 @@ styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css
 document.head.appendChild(styleLink);
 
 ReactDOM.render(
-  <App>
-    <GroupList />
-  </App>,
+  <App/>,
   document.getElementById("root")
 );
