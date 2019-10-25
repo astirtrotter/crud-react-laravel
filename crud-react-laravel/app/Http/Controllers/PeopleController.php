@@ -8,6 +8,9 @@ use App\Models\Group;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use League\Csv\Exception;
+use League\Csv\Reader;
+use League\Csv\Statement;
 
 class PeopleController extends Controller
 {
@@ -105,8 +108,31 @@ class PeopleController extends Controller
         return response()->json(null, 204);
     }
 
-    public function importPeople(Request $request, $group)
+    public function importPeople(Request $request, $groupId)
     {
-        $group = Group::findOrFail($group);
+        Group::findOrFail($groupId);
+
+        $content = $request->input('csv');
+
+        try {
+            $csv = Reader::createFromString($content);
+            $csv->setHeaderOffset(0);
+            $records = (new Statement())->process($csv);
+            foreach ($records as $record) {
+                $person = Person::where('email_address', $record['email_address'])->first();
+                if ($person == null)
+                {
+                    $person = new Person;
+                    $person->group_id = $groupId;
+                    $person->fill($record);
+                    $person->save();
+                }
+            }
+            return $this->index($groupId);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 401);
+        }
     }
 }
