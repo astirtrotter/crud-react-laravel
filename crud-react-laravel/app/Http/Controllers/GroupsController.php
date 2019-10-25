@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\GroupCollection;
 use App\Http\Resources\GroupResource;
+use App\Http\Resources\PeopleCollection;
 use App\Models\Group;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
-class GroupController extends Controller
+class GroupsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,9 +42,9 @@ class GroupController extends Controller
             'name' => 'required'
         ]);
 
-        $Group = Group::create($request->all());
+        $group = Group::create($request->all());
 
-        return (new GroupResource($Group))
+        return (new GroupResource($group))
             ->response()
             ->setStatusCode(201);
     }
@@ -80,8 +80,8 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Group = Group::findOrFail($id);
-        $Group->update($request->all());
+        $group = Group::findOrFail($id);
+        $group->update($request->all());
 
         return response()->json(null, 204);
     }
@@ -94,9 +94,15 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        $Group = Group::findOrFail($id);
-        $Group->delete();
+        $group = Group::findOrFail($id);
+        $group->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function getPeople($group)
+    {
+        $group = Group::findOrFail($group);
+        return new PeopleCollection($group->people);
     }
 }
