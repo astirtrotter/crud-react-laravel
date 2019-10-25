@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 import ReactFileReader from 'react-file-reader'
 import { post } from 'axios'
+import PeopleList from "./PeopleList";
 
 class GroupList extends Component {
     constructor(props) {
@@ -55,7 +56,7 @@ class GroupList extends Component {
                             data.map((group, index) => {
                                 return (
                                     <Table.Row key={index}>
-                                        <Table.Cell singleLine><a href="#">{ group.name }</a></Table.Cell>
+                                        <Table.Cell singleLine><a href={`/group/${group.id}`}>{ group.name }</a></Table.Cell>
                                     </Table.Row>
                                 );
                             })

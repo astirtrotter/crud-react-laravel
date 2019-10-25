@@ -13,7 +13,7 @@ class GroupsController extends Controller
 {
     public function index()
     {
-        return new GroupCollection(Group::all());
+        return new GroupCollection(Group::all()->sort());
     }
 
     public function importGroups(Request $request)

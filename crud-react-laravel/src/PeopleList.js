@@ -4,11 +4,12 @@ import { Table } from 'semantic-ui-react'
 class PeopleList extends Component {
     constructor(props) {
         super(props);
+
         this.state = { data: [] };
     }
 
     componentDidMount() {
-        fetch("http://localhost:8000/api/people")
+        fetch("http://localhost:8000/api/group/" + this.props.groupId)
           .then(response => response.json())
           .then(data => this.setState({ data: data.data }));
     }
