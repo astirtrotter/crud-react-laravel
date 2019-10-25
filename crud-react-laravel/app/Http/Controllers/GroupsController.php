@@ -26,9 +26,13 @@ class GroupsController extends Controller
             $csv->setHeaderOffset(0);
             $records = (new Statement())->process($csv);
             foreach ($records as $record) {
-                Group::create($record);
+                $group = Group::where('name', $record['name'])->first();
+                if ($group == null)
+                {
+                    Group::create($record);
+                }
             }
-            return response()->json(null, 201);
+            return $this->index();
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()

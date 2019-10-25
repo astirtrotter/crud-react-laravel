@@ -3,7 +3,7 @@ import { Table } from 'semantic-ui-react'
 import ReactFileReader from 'react-file-reader'
 import { post } from 'axios'
 
-class PeopleList extends Component {
+class GroupList extends Component {
     constructor(props) {
         super(props);
         this.state = { data: [] };
@@ -21,11 +21,11 @@ class PeopleList extends Component {
         if (!files.length) return;
 
         var reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = e => {
             const url = 'http://localhost:8000/api/group/import';
             const formData = {csv: e.target.result};
             post(url, formData)
-                .then(response => console.log(response))
+                .then(response => this.setState({data: response.data }))
                 .catch(e => {
                     alert(e.message);
                     console.log(e)
@@ -69,4 +69,4 @@ class PeopleList extends Component {
 
 }
 
-export default PeopleList
+export default GroupList
