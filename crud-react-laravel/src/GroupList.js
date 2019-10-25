@@ -41,7 +41,7 @@ class GroupList extends Component {
         return (
             <div className="d-flex f-col">
                 <ReactFileReader handleFiles={this.handleFiles} fileTypes={'.csv'}>
-                    <button id="importGroups" className="ui primary button">Import Groups</button>
+                    <button className="ui primary button">Import Groups</button>
                 </ReactFileReader>
                 <Table celled padded>
                     <Table.Header>

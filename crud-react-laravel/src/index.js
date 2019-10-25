@@ -13,7 +13,7 @@ import PeopleList from "./PeopleList";
 
 const App = () => (
     <Container style={{ margin: 20 }}>
-        <Header as="h3"><span role="img" aria-label="logo">⛵️</span> Church </Header>
+        <Header as="h3"><a href="/"><span role="img" aria-label="logo">⛵️</span> Church </a></Header>
         <Router>
             <Switch>
                 <Route path="/" exact><GroupList /></Route>
